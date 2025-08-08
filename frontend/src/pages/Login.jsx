@@ -2,22 +2,20 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import { handleError, handleSuccess } from '../utils/utils.js';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; // 👁️ Icons
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-function Login() {
+function Login({ setIsAuthenticated }) {  // <-- setIsAuthenticated yahan lein
   const [loginInfo, setloginInfo] = useState({
     email: '',
     password: ''
   });
 
-  const [showPassword, setShowPassword] = useState(false); // 👁️ Toggle state
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const copyloginInfo = { ...loginInfo };
-    copyloginInfo[name] = value;
-    setloginInfo(copyloginInfo);
+    setloginInfo(prev => ({ ...prev, [name]: value }));
   };
 
   const handlelogin = async (e) => {
@@ -38,17 +36,22 @@ function Login() {
       });
       const result = await response.json();
 
-      const { success, message, error, jwtToken, name , role } = result;
+      console.log(result);
+      
+      const { success, message, error, user } = result;
+      console.log('token', result.token);
       if (success) {
         handleSuccess(message);
-        localStorage.setItem('token', jwtToken);
-        localStorage.setItem('UserLoggedIn', name);
-        localStorage.setItem('userRole', role); 
-        console.log("Token:", jwtToken);
-        console.log("Name:", name);
-         console.log("Role:", role);
-        
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('UserLoggedIn', user.name);
+        localStorage.setItem('userRole', user.role);
+         localStorage.setItem('userID', user._id);
+      
+
+        setIsAuthenticated(true);  // <-- yeh line zaroor add karein
+
         setTimeout(() => {
+          console.log("Navigating to /home");
           navigate('/home');
         }, 1000);
       } else if (error) {
@@ -84,7 +87,6 @@ function Login() {
             />
           </div>
 
-          {/* 👁️ Password field with show/hide toggle */}
           <div className="flex flex-col relative">
             <label htmlFor="password" className="text-[20px]">Password</label>
             <input
@@ -103,7 +105,6 @@ function Login() {
             </div>
           </div>
 
-          {/* Forgot Password Link */}
           <div className="text-right text-sm">
             <Link to="/forgotpassword" className="text-blue-600 hover:underline">
               Forgot Password?

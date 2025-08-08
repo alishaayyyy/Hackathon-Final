@@ -4,6 +4,8 @@ import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const userRole = localStorage.getItem("userRole");
+console.log(allowedRoles);
+console.log(userRole);
 
   if (userRole === null) {
     // Show loading if role is not yet available

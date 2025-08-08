@@ -1,29 +1,30 @@
-// import { required } from 'joi';
 import mongoose from 'mongoose';
-const schema = mongoose.Schema;
 
+const { Schema } = mongoose;
 
-// **************************User Schemaaa*************************************************
-const UserSchema = new schema({
-  name:{
-    required:true,
-    type:String
+// **************************User Schema*************************************************
+const UserSchema = new Schema({
+  name: {
+    type: String,
+    required: true
   },
-   email:{
-    required:true,
-    type:String,
-    unique:true
+  email: {
+    type: String,
+    required: true,
+    unique: true
   },
-    password:{
-    required:true,
-    type:String
+  password: {
+    type: String,
+    required: true
   },
-    role: {
+  role: {
     type: String,
     enum: ["user", "admin"],
-    default: "user", // only "user" is assigned by default
+    default: "user" // only "user" is assigned by default
   }
-})
- const userModel = mongoose.model('User', UserSchema);
-// module.exports= userModel
-export default userModel
+});
+
+// ✅ Prevent OverwriteModelError
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
+
+export default User;

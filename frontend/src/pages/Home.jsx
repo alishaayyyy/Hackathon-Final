@@ -4,8 +4,9 @@
 // import { ToastContainer } from 'react-toastify';
 
 import Navbar from "../Components/Navbar.jsx"
-import AllQuestions from '../Components/AllQuestions.jsx';
+import AllQuestions from '../Components/AllPosts';
 import Footer from "../Components/Footer.jsx";
+import AllPosts from "../Components/AllPosts";
 // import Slider from "../Components/Slider.jsx"
 
 function Home() {
@@ -14,7 +15,7 @@ function Home() {
     return (
         <div>
 <Navbar/>
-<AllQuestions/>
+<AllPosts/>
 <Footer/>
 {/* <Slider/> */}
         </div>

@@ -16,8 +16,9 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = localStorage.getItem('loggedInUser');
-    if (user) setLoggedInUser(JSON.parse(user));
+    // LocalStorage se username load karen
+    const user = localStorage.getItem('UserLoggedIn');
+    if (user) setLoggedInUser(user);
   }, []);
 
   const handleSuccess = (msg) => toast.success(msg);
@@ -25,11 +26,12 @@ const Navbar = () => {
   const handleLogout = () => {
     if (!localStorage.getItem('token')) return;
     localStorage.removeItem('token');
-    localStorage.removeItem('loggedInUser');
+    localStorage.removeItem('UserLoggedIn');
+    localStorage.removeItem('userRole');
     handleSuccess('User logged out');
     setTimeout(() => {
       navigate('/login');
-    }, 1000);
+    }, 500);
   };
 
   const handleProfileRedirect = () => {
@@ -37,7 +39,7 @@ const Navbar = () => {
     toast.info(`Redirecting to ${role === "admin" ? "Admin" : "User"} Dashboard...`);
     setTimeout(() => {
       navigate(role === "admin" ? "/admin/dashboard" : "/user/dashboard");
-    }, 1000);
+    }, 500);
   };
 
   return (
