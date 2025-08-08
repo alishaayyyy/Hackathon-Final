@@ -15,7 +15,7 @@ import Faqs from './pages/Faqs.jsx';
 import About from './pages/About.jsx';
 import Contact from './pages/Contact.jsx';
 import StyleDetail from './Components/StyleDetail.jsx';
-import MyReviews from './Components/MyReview.jsx';  // <-- Import MyReviews here
+// import MyReviews from './Components/MyReview.jsx';  // <-- Import MyReviews here
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -45,7 +45,7 @@ function App() {
         <Route path='/contact' element={<PrivateRoute element={<Contact />} />} />
 
         {/* Your Reviews protected route */}
-        <Route path='/my-reviews' element={<PrivateRoute element={<MyReviews />} />} />
+        {/* <Route path='/my-reviews' element={<PrivateRoute element={<MyReviews />} />} /> */}
 
         <Route path="/unauthorized" element={<Unauthorized />} />
 
